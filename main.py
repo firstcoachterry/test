@@ -62,7 +62,9 @@ async def monitor(robot: base.Robot):
   """Continuously prints sensor values to stdout.
 
   Prints using the "plot:" format that BlocklyPy Commander uses, so sensor
-  readings can be plotted in the extension.
+  readings can be plotted in the extension.  Never stops monitoring, since
+  `multitask(..., race=True)` will stop all parallel tasks when any of them
+  stop (e.g., when the actual robot run stops).
   
   Args:
     robot: Robot to gather sensor values from.,
@@ -71,7 +73,23 @@ async def monitor(robot: base.Robot):
   print(f"plot: start Angle,Distance")
   while True:
     print(f"plot: {robot.drive.angle()},{robot.drive.distance()}")
-    await wait(100)
+    await wait(50)
+
+
+async def cancel(robot: base.Robot):
+  """Waits for a button press.
+
+  This function simply returns upon the first button press, which cancels the
+  current run because `multitask(..., race=True)` stops all other coroutines
+  once any of them returns.
+  
+  Args:
+    robot: Robot whose button should be pressed.
+  """
+  while not robot.hub.buttons.pressed():  # wait for any button to be pressed
+    await wait(10)
+  while robot.hub.buttons.pressed():  # now wait for them to be released
+    await wait(10)
 
 
 def main():
@@ -98,6 +116,7 @@ def main():
         multitask(
             RUNS[run_id](robot),
             monitor(robot),
+            cancel(robot),
             race=True,  # cancel monitoring when run finishes
         ),
     )

@@ -9,6 +9,13 @@ class Robot:
   def __init__(self):
     self.hub = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
     self.hub.display.orientation(Side.LEFT)
+
+    # Normally, the center button ends the whole program, but this is harmful
+    # because we combine all runs in a single program.  We disable the default
+    # center button behavior so we can make it cancel the current run without
+    # quitting the whole program.
+    self.hub.system.set_stop_button(None)
+
     self.left_wheel = Motor(
         Port.E,
         positive_direction=Direction.COUNTERCLOCKWISE,
@@ -20,8 +27,8 @@ class Robot:
     self.drive = DriveBase(
         self.left_wheel,
         self.right_wheel,
-        wheel_diameter=62.4,
-        axle_track=87,  # distance between wheel midpoints
+        wheel_diameter=62.4,  # in mm
+        axle_track=87,  # mm between wheel midpoints
     )
     self.drive.use_gyro(True)
 
