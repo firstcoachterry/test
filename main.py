@@ -18,7 +18,6 @@ async def quit(robot: base.Robot):
   """
   exit()
 
-
 RUNS = [
     quit,
     run1.go,
@@ -48,10 +47,7 @@ def select_run(run_id: int | None) -> int | None:
   menu_options = []
   for _ in range(len(RUNS)):
     menu_options.append("Q" if run_id == 0 else str(run_id))
-
-    # Subtract to run the cycle backwards, because with the hub sideways the up
-    # arrow is actually the left (i.e., back) arrow.
-    run_id = (run_id - 1) % len(RUNS)
+    run_id = (run_id + 1) % len(RUNS)
 
   # Reuse the standard menu selection routine.
   selection = hub_menu(*menu_options)

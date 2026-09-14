@@ -8,7 +8,7 @@ from pybricks.tools import hub_menu, wait
 class Robot:
   def __init__(self):
     self.hub = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
-    self.hub.display.orientation(Side.LEFT)
+    self.hub.display.orientation(Side.FRONT)
 
     # Normally, the center button ends the whole program, but this is harmful
     # because we combine all runs in a single program.  We disable the default
@@ -21,16 +21,16 @@ class Robot:
         positive_direction=Direction.COUNTERCLOCKWISE,
     )
     self.right_wheel = Motor(
-        Port.D,
+        Port.F,
         positive_direction=Direction.CLOCKWISE,
     )
     self.drive = DriveBase(
         self.left_wheel,
         self.right_wheel,
         wheel_diameter=62.4,  # in mm
-        axle_track=87,  # mm between wheel midpoints
+        axle_track=140,  # mm between wheel midpoints
     )
     self.drive.use_gyro(True)
 
-    self.left_attachment = Motor(Port.F)
-    self.right_attachment = Motor(Port.B)
+    self.left_attachment = Motor(Port.C)
+    self.right_attachment = Motor(Port.D)
