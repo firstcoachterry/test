@@ -8,6 +8,7 @@ import base
 import run1
 import run2
 import run3
+import fungus
 
 
 async def quit(robot: base.Robot):
@@ -23,6 +24,7 @@ RUNS = [
     run1.go,
     run2.go,
     run3.go,
+    fungus.go
 ]
 
 

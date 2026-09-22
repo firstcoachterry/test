@@ -1,6 +1,6 @@
 from pybricks.hubs import PrimeHub
 from pybricks.parameters import Axis, Color, Direction, Port, Side
-from pybricks.pupdevices import ColorDistanceSensor, Motor
+from pybricks.pupdevices import ColorSensor, Motor
 from pybricks.robotics import DriveBase
 from pybricks.tools import hub_menu, wait
 
@@ -16,8 +16,8 @@ class Robot:
     # quitting the whole program.
     self.hub.system.set_stop_button(None)
 
-    self.left_sensor = ColorDistanceSensor(Port.A)
-    self.left_sensor = ColorDistanceSensor(Port.B)
+    self.left_sensor = ColorSensor(Port.A)
+    self.right_sensor = ColorSensor(Port.B)
     self.left_attachment = Motor(Port.C)
     self.right_attachment = Motor(Port.D)
     self.left_wheel = Motor(Port.E, Direction.COUNTERCLOCKWISE)
@@ -30,3 +30,4 @@ class Robot:
         axle_track=135,  # mm between wheel midpoints
     )
     self.drive.use_gyro(True)
+    self.drive.settings(turn_acceleration=500)
