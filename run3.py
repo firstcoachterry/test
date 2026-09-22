@@ -10,6 +10,5 @@ import base
 async def go(robot: base.Robot):
   robot.hub.light.on(Color.BLUE)
 
-
 if __name__ == "__main__":
   run_task(go(base.Robot()))
