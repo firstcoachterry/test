@@ -8,6 +8,7 @@ import base
 
 
 async def go(robot: base.Robot):
+  """Addresses Mission 3."""
   robot.drive.reset()
   robot.drive.settings(300)
   await robot.drive.straight(260)
