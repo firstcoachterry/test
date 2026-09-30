@@ -4,10 +4,10 @@ from pybricks.pupdevices import Motor
 from pybricks.robotics import DriveBase
 from pybricks.tools import run_task, wait
 
-import base
+import robot_settings
 
 
-async def go(robot: base.Robot):
+async def go(robot: robot_settings.Robot):
   robot.drive.reset()
   robot.drive.settings(100)
   robot.drive.drive(-50, 0)
@@ -15,7 +15,7 @@ async def go(robot: base.Robot):
   #await robot.drive.straight(700, Stop.HOLD)
   #robot.drive.drive(100,0)
   #while True:
-    #color = await robot.left_sensor.color()
+    #color = await robot.left_color_sensor.color()
     #print(f"{color=}")
     #if color == Color.WHITE:
       #break
@@ -26,4 +26,4 @@ async def go(robot: base.Robot):
 
 
 if __name__ == "__main__":
-  run_task(go(base.Robot()))
+  run_task(go(robot_settings.Robot()))
