@@ -4,10 +4,10 @@ from pybricks.pupdevices import Motor
 from pybricks.robotics import DriveBase
 from pybricks.tools import run_task, wait
 
-import base
+import robot_settings
 
 
-async def go(robot: base.Robot):
+async def go(robot: robot_settings.Robot):
   """Addresses Mission 3."""
   robot.drive.reset()
   robot.drive.settings(300)
@@ -16,4 +16,4 @@ async def go(robot: base.Robot):
 
 
 if __name__ == "__main__":
-  run_task(go(base.Robot()))
+  run_task(go(robot_settings.Robot()))
