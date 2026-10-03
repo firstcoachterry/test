@@ -44,7 +44,7 @@ def run_select(run_number: int | None) -> int | None:
   """
 
   # Fills up the menu slots with the runs starting at the next run.
-  run_number = 0 if run_number == None else run_number
+  run_number = 0 if run_number is None else run_number
   number_of_runs = len(RUNS)
   run_number = (run_number + 1) % number_of_runs # advances to the next run
   run_options = []
