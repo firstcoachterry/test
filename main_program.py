@@ -49,12 +49,12 @@ def run_select(run_number: int | None) -> int | None:
   run_number = (run_number + 1) % number_of_runs # advances to the next run
   run_options = []
   for _ in range(number_of_runs):
-    run_options.append("X" if run_number == 0 else str(run_number))
+    run_options.append("X" if run_number is 0 else str(run_number))
     run_number = (run_number + 1) % number_of_runs
 
   # Reuse normal menu selection programs.
   selected_run = hub_menu(*run_options)
-  return None if selected_run == "X" else int(selected_run)
+  return None if selected_run is "X" else int(selected_run)
 
 async def graph(robot: robot_settings.Robot):
   """Prints distance moved and current angle to the datalog tab below
@@ -76,7 +76,7 @@ async def cancel_current_run(robot: robot_settings.Robot):
   """Waits for a button press to cancel a program.
 
   This function returns on a button press, which cancels the current run
-  because `multitask(.., ..., race=True)` stops all other programs in the parenthesis
+  because `multitask(..., race=True)` stops all other programs in the parenthesis
   when any of them return.
 
   Args:
