@@ -6,10 +6,15 @@ from pybricks.tools import hub_menu, wait
 
 class Robot:
   def __init__(self):
-    self.hub = PrimeHub(Axis.Z, Axis.Y)
+    self.hub = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
     self.hub.display.orientation(Side.FRONT)
-    # Makes the center button no longer cancel the whole code.
+
+    # Makes the center button no longer cancel the whole code, which is useful
+    # because we don't want to restart the whole program every single run.
+    # Otherwise, the center button would stop the whoe program. This is bad, as
+    # all of the runs are on 1 program.
     self.hub.system.set_stop_button(None)
+    
     # Setting all the devices.
     self.left_color_sensor = ColorSensor(Port.A)
     self.right_color_sensor = ColorSensor(Port.B)
