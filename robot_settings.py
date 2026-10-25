@@ -32,7 +32,7 @@ class Robot:
     )
     self.drive.use_gyro(True)
     self.drive.settings(turn_acceleration=500)
-  async def drive_until_white(self, direction: int):
+  async def drive_until_color(self, direction: int, color: Color=Color.WHITE):
     # Use 1 or -1 for direction. 1 is forwards, and -1 is backwards.
     speed = 250 * direction
     self.drive.drive(speed,0)
@@ -40,7 +40,7 @@ class Robot:
       left_color = await self.left_color_sensor.color()
       right_color = await self.right_color_sensor.color()
       print(f"{left_color=}, {right_color=}")
-      if left_color == Color.WHITE or right_color == Color.WHITE:
+      if left_color == color or right_color == color:
         break
       wait(10)
     self.drive.hold()

@@ -9,11 +9,10 @@ import robot_settings
 
 async def go(robot: robot_settings.Robot):
   robot.drive.reset(0)
-  robot.left_attachment_motor.reset_angle(0)
   robot.drive.settings(250)
   await robot.drive.straight(-5)
   await robot.drive.straight(700, Stop.HOLD)
-  await robot.drive_until_white(1)
+  await robot.drive_until_color(1)
   await robot.drive.straight(125)
   await robot.drive.straight(-100)
   await robot.drive.straight(85)
