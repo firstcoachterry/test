@@ -12,7 +12,7 @@ async def go(robot: robot_settings.Robot):
   robot.drive.settings(250)
   await robot.drive.straight(-5)
   await robot.drive.straight(700, Stop.HOLD)
-  await robot.drive_until_color(1)
+  await robot.drive_until_color(250, "left")
   await robot.drive.straight(125)
   await robot.drive.straight(-100)
   await robot.drive.straight(85)
