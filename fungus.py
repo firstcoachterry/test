@@ -8,22 +8,28 @@ import robot_settings
 
 
 async def go(robot: robot_settings.Robot):
-  robot.drive.reset()
-  robot.drive.settings(100)
-  robot.drive.drive(-50, 0)
-  #await robot.drive.straight(-5)
-  #await robot.drive.straight(700, Stop.HOLD)
-  #robot.drive.drive(100,0)
-  #while True:
-    #color = await robot.left_color_sensor.color()
-    #print(f"{color=}")
-    #if color == Color.WHITE:
-      #break
-    #wait(10)
-  #robot.drive.hold()
-  #await robot.drive.turn(-90)
-  #await robot.drive.straight(450)
-
+  robot.drive.reset(0)
+  robot.left_attachment_motor.reset_angle(0)
+  robot.drive.settings(250)
+  await robot.drive.straight(-5)
+  await robot.drive.straight(700, Stop.HOLD)
+  await robot.drive_until_white(1)
+  await robot.drive.straight(125)
+  await robot.drive.straight(-100)
+  await robot.drive.straight(85)
+  await robot.drive.straight(-140)  
+  await robot.drive.turn(-90)
+  await robot.drive.straight(200)
+  await robot.drive.turn(45)
+  await robot.drive.straight(180)
+  await robot.drive.turn(90)
+  robot.drive.settings(straight_speed=100)
+  await robot.drive.straight(115)
+  robot.drive.settings(straight_speed=250)
+  await robot.drive.straight(-90)
+  await robot.drive.turn(90)
+  robot.drive.settings(500)
+  await robot.drive.straight(850)
 
 if __name__ == "__main__":
   run_task(go(robot_settings.Robot()))

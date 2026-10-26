@@ -6,10 +6,15 @@ from pybricks.tools import hub_menu, wait
 
 class Robot:
   def __init__(self):
-    self.hub = PrimeHub(Axis.Z, Axis.Y)
+    self.hub = PrimeHub(top_side=Axis.Z, front_side=Axis.Y)
     self.hub.display.orientation(Side.FRONT)
-    # Makes the center button no longer cancel the whole code.
+
+    # Makes the center button no longer cancel the whole code, which is useful
+    # because we don't want to restart the whole program every single run.
+    # Otherwise, the center button would stop the whoe program. This is bad, as
+    # all of the runs are on 1 program.
     self.hub.system.set_stop_button(None)
+    
     # Setting all the devices.
     self.left_color_sensor = ColorSensor(Port.A)
     self.right_color_sensor = ColorSensor(Port.B)
@@ -27,3 +32,15 @@ class Robot:
     )
     self.drive.use_gyro(True)
     self.drive.settings(turn_acceleration=500)
+  async def drive_until_white(self, direction: int):
+    # Use 1 or -1 for direction. 1 is forwards, and -1 is backwards.
+    speed = 250 * direction
+    self.drive.drive(speed,0)
+    while True:
+      left_color = await self.left_color_sensor.color()
+      right_color = await self.right_color_sensor.color()
+      print(f"{left_color=}, {right_color=}")
+      if left_color == Color.WHITE or right_color == Color.WHITE:
+        break
+      wait(10)
+    self.drive.hold()
