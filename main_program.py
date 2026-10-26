@@ -6,7 +6,7 @@ from pybricks.tools import hub_menu, multitask, run_task, wait
 
 import robot_settings
 # Add new runs here with import
-import attachment
+import drone
 import rock
 import fungus
 
@@ -22,8 +22,8 @@ async def exit(robot: robot_settings.Robot):
 # Add new runs here with the program to run
 RUNS = [
   exit,
-  attachment.go,
   rock.go,
+  drone.go,
   fungus.go
 ]
 
