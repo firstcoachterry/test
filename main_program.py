@@ -8,6 +8,9 @@ import robot_settings
 # Add new runs here with import
 import rock
 import house
+import seeds
+import roots
+import drone
 import fungus
 
 
@@ -23,6 +26,9 @@ async def exit(robot: robot_settings.Robot):
 RUNS = [
   exit,
   rock.go,
+  seeds.go,
+  roots.go,
+  drone.go,
   house.go,
   fungus.go
 ]
@@ -115,6 +121,8 @@ def main():
         race=True  # Cancels monitoring when finished.
       ),
     )
+    # Prevent the robot from trying to hold its yaw angle between runs.
+    robot.drive.stop()
 
 
 if __name__ == "__main__":
