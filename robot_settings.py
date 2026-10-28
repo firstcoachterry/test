@@ -33,10 +33,18 @@ class Robot:
     self.drive.use_gyro(True)
     self.drive.settings(turn_acceleration=500)
   async def drive_until_color(self, speed: int, left: bool, right: bool, color: Color=Color.WHITE):
-    # Put a number for speed in mm per second, positive for forwards, negative
-    # for backwards.
-    # Put true or false in left and right.
-    # Put in a color if you don't want white.
+    """Drives until it sees a color.
+    
+    Args:
+    speed: The speed in mm/s, positive for forwards, negative for backwards.
+    left: A bool (True/False) that tells whether or not to use the left color
+    sensor.
+    right: A bool (True/False) that tells whether or not to use the right color
+    sensor.
+    color: The color the robot stops moving on when it sees it. It defaults to
+    white, so only put in Color.RED or some other color if you don't want white.
+    
+    """
     if left:
       left_color = self.left_color_sensor.color()
     else:

@@ -8,6 +8,7 @@ import robot_settings
 
 
 async def go(robot: robot_settings.Robot):
+  """ Runs mission 15"""
   robot.drive.reset(0)
   robot.left_attachment_motor.reset_angle(0)
   await robot.drive.straight(100)

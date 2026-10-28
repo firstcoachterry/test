@@ -8,6 +8,7 @@ import robot_settings
 
 
 async def go(robot: robot_settings.Robot):
+  """ Runs missions 6, 7, and 11."""
   robot.drive.reset(0)
   robot.drive.settings(250)
   await robot.drive.straight(-5)
