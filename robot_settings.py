@@ -45,18 +45,13 @@ class Robot:
     white, so only put in Color.RED or some other color if you don't want white.
     
     """
-    if left:
-      left_color = self.left_color_sensor.color()
-    else:
-      left_color = None
-    if right:
-      right_color = self.right_color_sensor.color()
-    else:
-      right_color = None
     self.drive.drive(speed,0)
     while True:
+      left_color = await self.left_color_sensor.color() if left else None
+      right_color = await self.right_color_sensor.color() if right else None
       print(f"{left_color=}, {right_color=}")
-      if left_color == color or right_color == color:
+      color_reached = True if left_color == color or right_color == color else False
+      if color_reached:
         break
       wait(10)
     self.drive.hold()
