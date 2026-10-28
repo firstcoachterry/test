@@ -50,8 +50,7 @@ class Robot:
       left_color = await self.left_color_sensor.color() if left else None
       right_color = await self.right_color_sensor.color() if right else None
       print(f"{left_color=}, {right_color=}")
-      color_reached = True if left_color == color or right_color == color else False
-      if color_reached:
+      if left_color == color or right_color == color:
         break
       wait(10)
     self.drive.hold()
