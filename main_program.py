@@ -7,6 +7,7 @@ from pybricks.tools import hub_menu, multitask, run_task, wait
 import robot_settings
 # Add new runs here with import
 import rock
+import house
 import seeds
 import roots
 import drone
@@ -28,6 +29,7 @@ RUNS = [
   seeds.go,
   roots.go,
   drone.go,
+  house.go,
   fungus.go
 ]
 
@@ -106,7 +108,7 @@ def main():
     robot.hub.light.on(Color(h=(i * 5) % 360, s=100, v=value))
     wait(5)
   
-  run_number = None  # Starting dummy run number
+  run_number = None  # Starting dummy run number.
   while True:
     run_number = run_select(run_number)
     if run_number is None:
