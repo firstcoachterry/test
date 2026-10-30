@@ -14,6 +14,5 @@ async def go(robot: robot_settings.Robot):
   await robot.right_attachment_motor.run_until_stalled(500)
 
 
-
 if __name__ == "__main__":
   run_task(go(robot_settings.Robot()))
