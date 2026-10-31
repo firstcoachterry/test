@@ -12,6 +12,7 @@ async def go(robot: robot_settings.Robot):
   robot.drive.reset(0)
   robot.left_attachment_motor.reset_angle(0)
   robot.drive.settings(straight_speed=250)
+  # FIXME: tobykoo - Remove await to run in parallel.
   await robot.left_attachment_motor.run_until_stalled(-250)
   await robot.drive.straight(-5)
   await robot.drive.straight(300)
