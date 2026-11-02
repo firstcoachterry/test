@@ -9,6 +9,7 @@ import robot_settings
 
 async def go(robot: robot_settings.Robot):
   """ Runs mission 15"""
+  # TODO: tobykoo - Add 'arc' to make the run smoother.
   robot.drive.reset(0)
   robot.left_attachment_motor.reset_angle(0)
   robot.drive.settings(straight_speed=250)
