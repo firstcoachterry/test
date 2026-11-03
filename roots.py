@@ -11,6 +11,10 @@ async def go(robot: robot_settings.Robot):
   """Addresses Mission 3.b"""
   robot.drive.reset()
   robot.drive.settings(300)
+  await robot.drive.straight(distance=500)
+  await robot.drive.turn(angle=-7)
+  await robot.drive.straight(distance=330)
+  await robot.drive.turn(angle=29)
   await robot.right_attachment_motor.run_until_stalled(500)
 
 
