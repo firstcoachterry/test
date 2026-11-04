@@ -10,7 +10,7 @@ import robot_settings
 async def go(robot: robot_settings.Robot):
   # Copied from `fungus.py`, please replace.
   robot.drive.reset(0)
-  robot.drive.settings(300)
+  robot.drive.settings(250)
   await robot.drive.straight(500)
   await robot.drive.arc(-600, angle=25, then=Stop.HOLD, wait=True)
   await robot.drive.straight(-50)
