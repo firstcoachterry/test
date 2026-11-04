@@ -9,11 +9,9 @@ import robot_settings
 
 async def go(robot: robot_settings.Robot):
   """ Runs mission 15"""
-  # TODO: tobykoo - Add 'arc' to make the run smoother. Never mind, 'arc' is finicky.
   robot.drive.reset(0)
   robot.left_attachment_motor.reset_angle(0)
   robot.drive.settings(straight_speed=300)
-  # FIXME: tobykoo - Remove await to run in parallel. Done.
   robot.left_attachment_motor.run_until_stalled(-250)
   await robot.drive.straight(-5)
   await robot.drive.straight(100)
