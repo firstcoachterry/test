@@ -48,6 +48,29 @@ async def go(robot: robot_settings.Robot):
   # https://docs.pybricks.com/en/latest/robotics.html#pybricks.robotics.DriveBase.arc
   await robot.drive.arc(radius=200, angle=90)
 
+  # Most driving commands have an optional `then` argument that tells the robot
+  # what to do at the end.  The default is `Stop.HOLD` which makes robot slow to
+  # a stop at the desired distance, and then actively try to stay put.  Another
+  # useful setting is `Stop.NONE`, which means the robot continues at full speed
+  # without attempting to slow or stop.  This setting is intended for "chaining"
+  # movement commands like `straight()` and `arc()`.
+  #
+  # For example, the following commands drive the robot in a path like a square
+  # with rounded corners.  Critically, while chaining `straight()` and `turn()`
+  # commands forces the robot to stop at each corner, this will drive smoothly
+  # without stopping.
+  #
+  # Note: You likely still want `Stop.HOLD` on the last driving command, so the
+  # robot stops on the mark instead of coasting, which may introduce errors.
+  await robot.drive.arc(radius=150, angle=90, then=Stop.NONE)
+  await robot.drive.straight(distance=200, then=Stop.NONE)
+  await robot.drive.arc(radius=150, angle=90, then=Stop.NONE)
+  await robot.drive.straight(distance=200, then=Stop.NONE)
+  await robot.drive.arc(radius=150, angle=90, then=Stop.NONE)
+  await robot.drive.straight(distance=200, then=Stop.NONE)
+  await robot.drive.arc(radius=150, angle=90, then=Stop.NONE)
+  await robot.drive.straight(distance=200)  # NB: Defaults to `Stop.HOLD`
+
   ### ATTACHMENTS ##############################################################
   # Use `robot.left_attachment_motor` and `robot.right_attachment_motor` to
   # control the attachments.  The examples below use the left motor, but the
