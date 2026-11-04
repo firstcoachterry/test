@@ -78,7 +78,7 @@ async def go(robot: robot_settings.Robot):
   #
   # For more info on controlling attachment motors, see:
   # https://docs.pybricks.com/en/latest/pupdevices/motor.html
-  #
+
   # Turn the left attachment motor by a fixed amount from its current position.
   # The speed is measured in degrees per second.  The angle defines the number
   # of degrees to turn, with sign indicating direction.
