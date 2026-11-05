@@ -11,11 +11,11 @@ async def go(robot: robot_settings.Robot):
   """ Runs missions 6, 7, and 11."""
   # TODO: tobykoo - Change normal speed to 300. Don't spend a long time on it.
   robot.drive.reset(0)
-  robot.drive.settings(straight_speed=250)
+  robot.drive.settings(straight_speed=300)
   await robot.drive.straight(-5)
   robot.drive.settings(straight_speed=500)
   await robot.drive.straight(700, Stop.HOLD)
-  robot.drive.settings(straight_speed=250)
+  robot.drive.settings(straight_speed=300)
   await robot.drive_until_color(250, True, False)
   await robot.drive.straight(125)
   await robot.drive.straight(-100)
@@ -28,7 +28,7 @@ async def go(robot: robot_settings.Robot):
   await robot.drive.turn(90)
   robot.drive.settings(straight_speed=100)
   await robot.drive.straight(115)
-  robot.drive.settings(straight_speed=250)
+  robot.drive.settings(straight_speed=300)
   await robot.drive.straight(-90)
   await robot.drive.turn(90)
   robot.drive.settings(500)
