@@ -9,7 +9,7 @@ import robot_settings
 import rock
 import house
 import seeds
-import roots
+import tree_and_roots
 import drone
 import fungus
 
@@ -27,7 +27,7 @@ RUNS = [
   exit,
   rock.go,
   seeds.go,
-  roots.go,
+  tree_and_roots.go,
   drone.go,
   house.go,
   fungus.go
