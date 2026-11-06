@@ -8,8 +8,8 @@ import robot_settings
 
 async def go(robot: robot_settings.Robot):
   """Use this program to test attachments."""
-  robot.left_attachment_motor.reset_angle()
-  robot.right_attachment_motor.reset_angle()
+  robot.left_attachment_motor.reset_angle(0)
+  robot.right_attachment_motor.reset_angle(0)
   await robot.right_attachment_motor.run_until_stalled(-1000)
 
 
