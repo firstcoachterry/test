@@ -10,13 +10,17 @@ import robot_settings
 async def go(robot: robot_settings.Robot):
   robot.drive.reset()
   robot.drive.settings(300)
-  await robot.drive.straight(700, Stop.HOLD)
+  await robot.drive.straight(725, Stop.HOLD)
   robot.drive.settings(straight_speed=250)
   await robot.drive_until_color(250, True, False)
   await robot.drive.turn(angle=30)
-  await robot.drive.straight(135)
-  await robot.right_attachment_motor.run_angle(speed=100, rotation_angle=-300)
-  #make robot back up
+  await robot.drive.straight(145)
+  await robot.right_attachment_motor.run_angle(speed=700, rotation_angle=-200)
+  # old rotatian angle 450
+  await robot.drive.straight(-135)
+  await robot.drive.turn(angle=-30)
+  await robot.drive.straight(-725)
+  await robot.right_attachment_motor.run_angle(speed=700, rotation_angle=--200)
   #await robot.drive.straight()
 
 
