@@ -8,7 +8,10 @@ import robot_settings
 
 
 async def go(robot: robot_settings.Robot):
-  """Runs missions 5, 8, and 9"""
+  """Runs missions 5, 8, and 9
+  
+  Temporarily a dummy run.
+  """
   robot.drive.reset(0)
   robot.drive.settings(straight_speed=300)
   robot.left_attachment_motor.reset_angle(0)

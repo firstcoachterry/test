@@ -6,9 +6,8 @@ from pybricks.tools import hub_menu, multitask, run_task, wait
 
 import robot_settings
 # Add new runs here with import
-import rock
 import house
-import seeds
+import seeds_and_rock
 import tree_and_roots
 import drone
 import fungus
@@ -26,8 +25,7 @@ async def exit(robot: robot_settings.Robot):
 # Add new runs here with the program to run
 RUNS = [
   exit,
-  rock.go,
-  seeds.go,
+  seeds_and_rock.go,
   tree_and_roots.go,
   drone.go,
   house.go,
@@ -43,7 +41,7 @@ def run_select(run_number: int | None) -> int | None:
   Drivers only need to use the arrow keys to redo a past run
   or skip runs. Runs are numbered, and "X" is the program that exits the main
   program.
-
+z
   Args:
     run_number: Run that just finished, or None at the start of the program
   
