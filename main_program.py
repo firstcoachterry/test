@@ -6,12 +6,13 @@ from pybricks.tools import hub_menu, multitask, run_task, wait
 
 import robot_settings
 # Add new runs here with import
-import rock
 import house
-import seeds
-import roots
+import seeds_and_rock
+import tree_and_roots
 import drone
 import fungus
+import planting
+import keystone
 
 
 async def exit(robot: robot_settings.Robot):
@@ -25,12 +26,13 @@ async def exit(robot: robot_settings.Robot):
 # Add new runs here with the program to run
 RUNS = [
   exit,
-  rock.go,
-  seeds.go,
-  roots.go,
+  seeds_and_rock.go,
+  tree_and_roots.go,
   drone.go,
   house.go,
-  fungus.go
+  fungus.go,
+  keystone.go,
+  planting.go
 ]
 
 
@@ -123,6 +125,8 @@ def main():
     )
     # Prevent the robot from trying to hold its yaw angle between runs.
     robot.drive.stop()
+    robot.left_attachment_motor.stop()
+    robot.right_attachment_motor.stop()
 
 
 if __name__ == "__main__":
