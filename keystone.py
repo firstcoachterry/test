@@ -16,9 +16,10 @@ async def go(robot: robot_settings.Robot):
   await robot.drive.turn(angle=30)
   await robot.drive.straight(145)
   await robot.right_attachment_motor.run_angle(speed=700, rotation_angle=-200)
-  # old rotatian angle 450
+  # old rotation angle 450
   await robot.drive.straight(-135)
   await robot.drive.turn(angle=-30)
+  robot.drive.settings(straight_speed=500)
   await robot.drive.straight(-725)
   await robot.right_attachment_motor.run_angle(speed=700, rotation_angle=--200)
   #await robot.drive.straight()
