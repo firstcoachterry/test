@@ -11,7 +11,8 @@ import seeds_and_rock
 import tree_and_roots
 import drone
 import fungus
-import dump
+import planting
+import keystone
 
 
 async def exit(robot: robot_settings.Robot):
@@ -30,7 +31,8 @@ RUNS = [
   drone.go,
   house.go,
   fungus.go,
-  dump.go
+  planting.go,
+  keystone.go
 ]
 
 
