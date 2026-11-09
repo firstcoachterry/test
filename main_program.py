@@ -31,8 +31,8 @@ RUNS = [
   drone.go,
   house.go,
   fungus.go,
-  planting.go,
-  keystone.go
+  keystone.go,
+  planting.go
 ]
 
 
@@ -43,7 +43,7 @@ def run_select(run_number: int | None) -> int | None:
   Drivers only need to use the arrow keys to redo a past run
   or skip runs. Runs are numbered, and "X" is the program that exits the main
   program.
-z
+
   Args:
     run_number: Run that just finished, or None at the start of the program
   
@@ -125,6 +125,8 @@ def main():
     )
     # Prevent the robot from trying to hold its yaw angle between runs.
     robot.drive.stop()
+    robot.left_attachment_motor.stop()
+    robot.right_attachment_motor.stop()
 
 
 if __name__ == "__main__":
