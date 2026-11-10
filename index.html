@@ -45,15 +45,15 @@ div {
 const timerDiv = document.getElementById("timer");
 const splitsDiv = document.getElementById("splits");
 
-const TOTAL_SECS = 121;//arstarst
-const SHORT_SECS = 30;
+const TOTAL_SECS = 150;  // 2m30s
+const SHORT_SECS = 30;  // 30-second warning
 const REDRAW_MS = 10;
-const BEEP_HZ = 1200; // standard A4 pitch
+const BEEP_HZ = 1200;
 const BEEP_VOLUME = 0.5;  // in [0,1]
 
 var startTime = null;
 var lastSplitTime = null;
-var splits = [];  // elapsed seconds
+var splits = [];  // in seconds, alternating run/swap/run
 var redrawer = null;
 var alreadyShort = false;
 
