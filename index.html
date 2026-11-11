@@ -7,11 +7,12 @@
 body {
   background-color: rgb(16, 16, 16);
 }
-div {
+div, table {
   font-family: "Roboto Mono", monospace;
 }
 #timer {
   position: fixed;
+  z-index: 1;
   top: 0em;
   left: 0em;
   width: 100%;
@@ -19,31 +20,24 @@ div {
   text-align: center;
 }
 #splits {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16em;
+  position: relative;
+  z-index: 2;
+  width: 10em;
+  margin: 0 auto;
   color: black;
   background-color: rgb(255, 255, 225);
-  font-size: 80pt;
-  text-align: left;
-
-  /* Table-style layout. */
-  display: grid;
-  grid-template-columns: 4em 1fr 2.4em 1fr;
-  align-items: center;
-  justify-items: right;
+  font-size: 55pt;
+  text-align: right;
 }
 </style>
 
 </head>
 <body>
+<table id="splits"></table>
 <div id="timer"></div>
-<div id="splits"></div>
 <script>
 const timerDiv = document.getElementById("timer");
-const splitsDiv = document.getElementById("splits");
+const splitsTable = document.getElementById("splits");
 
 const TOTAL_SECS = 150;  // 2m30s
 const SHORT_SECS = 30;  // 30-second warning
@@ -135,9 +129,9 @@ function stopTimer() {
 function resetTimer() {
   pauseTimer();
   drawTimer(0);
-  splitsDiv.innerHTML = "";
-  splitsDiv.hidden = true;
-  splitsDiv.style.boxShadow = "";
+  splitsTable.innerHTML = "";
+  splitsTable.hidden = true;
+  splitsTable.style.boxShadow = "";
   startTime = null;
   lastSplitTime = null;
   splits = [];
@@ -150,25 +144,26 @@ function splitTimer() {
   lastSplitTime = now;
 }
 
-function addSplitCell(text) {
-  const cell = document.createElement("div");
-  cell.innerHTML = text;
-  splitsDiv.appendChild(cell);
-}
-
 function showSplits() {
-  splitsDiv.innerHTML = "";
+  splitsTable.innerHTML = "";
+  const row = splitsTable.insertRow();
+  const titles = row.insertCell();
+  const values = row.insertCell();
   for (var i = 0; i < splits.length; ++i) {
     const runId = Math.floor(i / 2) + 1;
     if (i % 2 == 0) {  // run
-      addSplitCell(`Run ${runId}`);
+      titles.innerHTML += `Run ${runId}`;
     } else {  // change
-      addSplitCell(`→${runId+1}`);
+      titles.innerHTML += `${runId}→${runId+1}`;
     }
-    addSplitCell(splits[i].toFixed(3) + "&nbsp;");
+    values.innerHTML += splits[i].toFixed(3) + "&nbsp;&nbsp;";
+    if (i + 1 < splits.length) {
+      titles.innerHTML += "<br>";
+      values.innerHTML += "<br>";
+    }
   }
-  splitsDiv.style.boxShadow = "8px 8px 16px 2px rgba(0, 0, 0, 1)";
-  splitsDiv.hidden = false;
+  splitsTable.style.boxShadow = "8px 8px 16px 2px rgba(0, 0, 0, 1)";
+  splitsTable.hidden = false;
 }
 
 window.addEventListener("keydown", function(event) {
@@ -184,7 +179,7 @@ window.addEventListener("keydown", function(event) {
 });
 
 drawTimer(0);
-splitsDiv.hidden = true;
+splitsTable.hidden = true;
 </script>
 
 </body>
