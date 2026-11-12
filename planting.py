@@ -12,15 +12,20 @@ async def go(robot: robot_settings.Robot):
   robot.drive.reset(0)
   robot.right_attachment_motor.reset_angle(0)
   robot.drive.settings(straight_speed=(300))
-  await robot.drive.straight(260)
+  await robot.drive.straight(270)
   await robot.right_attachment_motor.run_until_stalled(80)
-  await robot.drive.turn(3)
-  await robot.drive.turn(-6)
-  await robot.drive.turn(3)
+  """lowers attachment"""
   robot.drive.settings(straight_speed=(150))
-  await robot.right_attachment_motor.run_angle(1,80)
+  """Slows Robot"""
+  await robot.drive.turn(5)
+  await robot.drive.turn(-10)
+  await robot.drive.turn(5)
+  """Shakes the Box"""
   await robot.drive.straight(-500)
+  """Returns Robot"""
   
+
+
 
 if __name__ == "__main__":
   run_task(go(robot_settings.Robot()))

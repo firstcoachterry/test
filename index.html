@@ -1,0 +1,186 @@
+<html>
+<head>
+
+<title>FLL timer</title>
+
+<style>
+body {
+  background-color: rgb(16, 16, 16);
+}
+div, table {
+  font-family: "Roboto Mono", monospace;
+}
+#timer {
+  position: fixed;
+  z-index: 1;
+  top: 0em;
+  left: 0em;
+  width: 100%;
+  font-size: 500pt;
+  text-align: center;
+}
+#splits {
+  position: relative;
+  z-index: 2;
+  width: 10em;
+  margin: 0 auto;
+  color: black;
+  background-color: rgb(255, 255, 225);
+  font-size: 55pt;
+  text-align: right;
+}
+</style>
+
+</head>
+<body>
+<table id="splits"></table>
+<div id="timer"></div>
+<script>
+const timerDiv = document.getElementById("timer");
+const splitsTable = document.getElementById("splits");
+
+const TOTAL_SECS = 150;  // 2m30s
+const SHORT_SECS = 30;  // 30-second warning
+const REDRAW_MS = 10;
+const BEEP_HZ = 1200;
+const BEEP_VOLUME = 0.5;  // in [0,1]
+
+var startTime = null;
+var lastSplitTime = null;
+var splits = [];  // in seconds, alternating run/swap/run
+var redrawer = null;
+var alreadyShort = false;
+
+// Sounds a tone at `startSecs` from now for `durationSecs`.
+function beep(startSecs, durationSecs) {
+  const audio = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audio.createOscillator();
+  const gain = audio.createGain();
+
+  // Wire everything together.
+  oscillator.connect(gain);
+  gain.connect(audio.destination);
+  oscillator.type = "sine";
+
+  const start = audio.currentTime + startSecs;
+  const end = start + durationSecs;
+  oscillator.frequency.setValueAtTime(BEEP_HZ, start);
+  gain.gain.setValueAtTime(BEEP_VOLUME, start);
+  oscillator.start(start);
+  oscillator.stop(end);
+}
+
+// Sounds `count` tones spaced `intervalSecs` apart.
+function beeps(count, intervalSecs) {
+  var now = 0.0;
+  for (; count > 0; --count) {
+    beep(now, intervalSecs / 2.0);
+    now += intervalSecs;
+  }
+}
+
+// Make a beep around 30 seconds and switch to red.
+function redraw() {
+  const elapsedSecs = (Date.now() - startTime) / 1000.0;
+  if (elapsedSecs >= TOTAL_SECS) {
+    drawTimer(TOTAL_SECS);
+    stopTimer();
+    beeps(3, 1.0);
+  } else {
+    drawTimer(elapsedSecs);
+  }
+}
+
+function drawTimer(elapsedSecs) {
+  const remainingSecs = TOTAL_SECS - elapsedSecs;
+  if (remainingSecs <= SHORT_SECS) {
+    if (!alreadyShort) {
+      alreadyShort = true;
+      beeps(5, 0.2);
+    }
+    timerDiv.style.color = "rgb(255, 0, 0)";
+  } else {
+    timerDiv.style.color = "rgb(230, 230, 230)";
+  }
+  const timerMins = Math.floor((remainingSecs + 1) / 60);
+  const timerSecs = Math.ceil(remainingSecs - timerMins * 60);
+  const paddedTimerSecs = ("0" + timerSecs).slice(-2);
+  timerDiv.innerHTML = `${timerMins}:${paddedTimerSecs}`;
+}
+
+function startTimer() {
+  resetTimer();
+  startTime = Date.now();
+  lastSplitTime = startTime;
+  redrawer = setInterval(redraw, REDRAW_MS);
+}
+
+function pauseTimer() {
+  if (redrawer !== null) clearInterval(redrawer);
+  redrawer = null;
+}
+
+function stopTimer() {
+  pauseTimer();
+  splitTimer();
+  showSplits();
+}
+
+function resetTimer() {
+  pauseTimer();
+  drawTimer(0);
+  splitsTable.innerHTML = "";
+  splitsTable.hidden = true;
+  splitsTable.style.boxShadow = "";
+  startTime = null;
+  lastSplitTime = null;
+  splits = [];
+  alreadyShort = false;
+}
+
+function splitTimer() {
+  const now = Date.now();
+  splits.push((now - lastSplitTime) / 1000.0);
+  lastSplitTime = now;
+}
+
+function showSplits() {
+  splitsTable.innerHTML = "";
+  const row = splitsTable.insertRow();
+  const titles = row.insertCell();
+  const values = row.insertCell();
+  for (var i = 0; i < splits.length; ++i) {
+    const runId = Math.floor(i / 2) + 1;
+    if (i % 2 == 0) {  // run
+      titles.innerHTML += `Run ${runId}`;
+    } else {  // change
+      titles.innerHTML += `${runId}→${runId+1}`;
+    }
+    values.innerHTML += splits[i].toFixed(3) + "&nbsp;&nbsp;";
+    if (i + 1 < splits.length) {
+      titles.innerHTML += "<br>";
+      values.innerHTML += "<br>";
+    }
+  }
+  splitsTable.style.boxShadow = "8px 8px 16px 2px rgba(0, 0, 0, 1)";
+  splitsTable.hidden = false;
+}
+
+window.addEventListener("keydown", function(event) {
+  if (redrawer !== null) {
+    if (event.key === " ") {
+      splitTimer();
+    } else if (event.key === "Escape") {
+      stopTimer();
+    }
+  } else {
+    if (event.key === " ") startTimer();
+  }
+});
+
+drawTimer(0);
+splitsTable.hidden = true;
+</script>
+
+</body>
+</html>
