@@ -53,4 +53,25 @@ class Robot:
       if left_color == color or right_color == color:
         break
       wait(10)
+async def drive_until_reflection(self, speed: int, left: bool, right: bool, reflection: int):
+    """Drives until it sees a color.
+    
+    Args:
+    speed: The speed in mm/s, positive for forwards, negative for backwards.
+    left: A bool (True/False) that tells whether or not to use the left color
+    sensor.
+    right: A bool (True/False) that tells whether or not to use the right color
+    sensor.
+    color: The color the robot stops moving on when it sees it. It defaults to
+    white, so only put in Color.RED or some other color if you don't want white.
+    
+    """
+    self.drive.drive(speed,0)
+    while True:
+      left_reflection = await self.left_color_sensor.reflection() if left else None
+      right_reflection = await self.right_color_sensor.reflection() if right else None
+      print(f"{left_reflection=}, {right_reflection=}")
+      if left_reflection == reflection or right_reflection == reflection:
+        break
+      wait(10)
     self.drive.hold()
