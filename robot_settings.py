@@ -31,19 +31,18 @@ class Robot:
       axle_track=135
     )
     self.drive.use_gyro(True)
+
+  async def drive_until_color(self, *, speed: int, left: bool, right: bool, color: Color=Color.WHITE):
     self.drive.settings(turn_acceleration=500)
-  async def drive_until_color(self, speed: int, left: bool, right: bool, color: Color=Color.WHITE):
     """Drives until it sees a color.
     
     Args:
-    speed: The speed in mm/s, positive for forwards, negative for backwards.
-    left: A bool (True/False) that tells whether or not to use the left color
-    sensor.
-    right: A bool (True/False) that tells whether or not to use the right color
-    sensor.
-    color: The color the robot stops moving on when it sees it. It defaults to
-    white, so only put in Color.RED or some other color if you don't want white.
-    
+      speed: The speed in mm/s, negative for backwards.
+      left: Whether or not to use the left color sensor.
+      right: Whether or not to use the right color sensor.
+      color: The color the robot stops moving on when it sees it. It defaults 
+        to white, so only put in Color.RED or some other color if you don't want
+        white.
     """
     self.drive.drive(speed,0)
     while True:
@@ -52,5 +51,30 @@ class Robot:
       print(f"{left_color=}, {right_color=}")
       if left_color == color or right_color == color:
         break
-      wait(10)
+      await wait(10)
+
+  async def drive_until_reflection(self, *, speed: int, left: bool, right: bool, min_reflection: int=-999, max_reflection: int=-998):
+    """Drives until it sees a certain amount of total reflection.
+    
+    Args:
+      speed: The speed in mm/s, negative for backwards.
+      left: Whether or not to use the left color sensor.
+      right: Whether or not to use the right color sensor.
+      reflection: The total reflection the robot stops moving on when it sees
+        that much reflection. Must be 0-100.
+    """
+    left_reflection = 0
+    right_reflection = 0
+    self.drive.drive(speed,0)
+    while True:
+      if left:
+        left_reflection = await self.left_color_sensor.reflection()
+        if min_reflection <= left_reflection <= max_reflection:
+          break
+      if right:
+        right_reflection = await self.right_color_sensor.reflection() 
+        if min_reflection <= right_reflection <= max_reflection:
+          break
+      print(f"{left_reflection=}, {right_reflection=}")
+      await wait(10)
     self.drive.hold()

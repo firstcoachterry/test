@@ -20,13 +20,13 @@ async def go(robot: robot_settings.Robot):
   elif FORKLIFT == "Lower Forklift":
     await robot.left_attachment_motor.run_angle(speed=1000, rotation_angle=7200)
   else:
-    wait(10)
+    await wait(10)
   if ARM == "Raise Arm":
     await robot.right_attachment_motor.run_angle(speed=1000, rotation_angle=200)
   elif ARM == "Lower Arm":
     await robot.right_attachment_motor.run_until_stalled(speed=1000, duty_limit=40)
   else:
-    wait(10)
+    await wait(10)
   #await robot.drive.turn(45)
   #await robot.drive.turn(-45)
   await robot.right_attachment_motor.run_until_stalled(speed=-1000, duty_limit=40)
