@@ -26,12 +26,16 @@ async def go(robot: robot_settings.Robot):
   await robot.drive.straight(25)
   await robot.right_attachment_motor.run_angle(speed=1000, rotation_angle=250)
   await robot.drive.straight(-145)
+  # TODO: tobykoo - Turn left, not right.
   await robot.drive.turn(90)
   await robot.drive.straight(290)
   await robot.drive.turn(-90)
   await robot.right_attachment_motor.run_until_stalled(speed=-1000, duty_limit=40)
   robot.right_attachment_motor.run_angle(speed=1000, rotation_angle=90)
   await robot.drive.straight(130)
+  robot.right_attachment_motor.run_angle(speed=300, rotation_angle=150)
+  # TODO: tobykoo - Add more to wait.
+  await wait(250)
   await robot.right_attachment_motor.run_angle(speed=300, rotation_angle=150)
   await robot.drive.straight(-50)
   robot.right_attachment_motor.run_until_stalled(speed=1000, duty_limit=40)
